@@ -1,0 +1,94 @@
+import 'package:dartz/dartz.dart';
+import 'package:viva_bcki/models/fdpi/spk_review/spk_contractor.dart';
+import 'package:viva_bcki/models/fdpi/spk_review/spk_employee.dart';
+import 'package:viva_bcki/models/fdpi/spk_review/spk_type.dart';
+
+import '../../models/errors/custom_exception.dart';
+import '../../models/fdpi/city.dart';
+import '../../models/fdpi/house.dart';
+import '../../models/fdpi/house_item.dart';
+import '../../models/fdpi/house_type.dart';
+import '../../models/fdpi/province.dart';
+import '../../models/fdpi/residence.dart';
+import '../../models/fdpi/site.dart';
+import '../data_providers/rest_api/fdpi/fdpi_rest.dart';
+
+class FdpiRepository {
+  final FdpiRest fdpiRest;
+
+  FdpiRepository({required this.fdpiRest});
+
+  Future<Either<CustomException, List<Province>>> getProvinces() async {
+    return fdpiRest.getProvinces();
+  }
+
+  Future<Either<CustomException, List<City>>> getCities(String id) async {
+    return fdpiRest.getCities(id);
+  }
+
+  Future<Either<CustomException, List<Site>>> getSites(
+    String idProv,
+    String idCity,
+    String status,
+  ) async {
+    return fdpiRest.getSites(idProv, idCity, status);
+  }
+
+  Future<Either<CustomException, List<Residence>>> getResidences(
+    String idProv,
+    String idCity,
+    String idSite,
+    String status,
+  ) async {
+    return fdpiRest.getResidences(idProv, idCity, idSite, status);
+  }
+
+  Future<Either<CustomException, List<SpkType>>> getSpkTypes(
+    String keyCode,
+  ) async {
+    return fdpiRest.getSpkTypes(keyCode);
+  }
+
+  Future<Either<CustomException, List<Employee>>> getEmployee() async {
+    return fdpiRest.getEmployee();
+  }
+
+  Future<Either<CustomException, List<Contractor>>> getContractor() async {
+    return fdpiRest.getContractor();
+  }
+
+  Future<Either<CustomException, List<Coordinates>>> getCoordinatess(
+    String idCluster,
+    String idSite,
+  ) async {
+    return fdpiRest.getCoordinatess(idCluster, idSite);
+  }
+
+  Future<Either<CustomException, List<HouseType>>> getHouseTypes(
+    String idSite,
+    String houseCategory,
+    String status,
+  ) async {
+    return fdpiRest.getHouseTypes(idSite, houseCategory, status);
+  }
+
+  Future<Either<CustomException, List<HouseItem>>> getHouseItem(
+    String? idProvince,
+    String? idProvCity,
+    String? idSite,
+    String? idCluster,
+    String? category,
+    String? status,
+    String? idHouseType,
+  ) async {
+    return fdpiRest.getHouseItem(
+      idProvince ?? "",
+      idProvCity ?? "",
+      idSite ?? "",
+      idCluster ?? "",
+      category ?? "",
+      status ?? "",
+      idHouseType ?? "",
+    );
+  }
+}
