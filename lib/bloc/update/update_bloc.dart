@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -47,7 +48,9 @@ class UpdateBloc extends Bloc<UpdateEvent, UpdateState> {
         emit(UpdateNotAvailable());
       }
     } catch (e) {
-      emit(UpdateError("Gagal memeriksa versi: ${e.toString()}"));
+      // version.json belum tersedia / tidak bisa diakses: lanjutkan tanpa update
+      log("Gagal memeriksa versi: ${e.toString()}");
+      emit(UpdateNotAvailable());
     }
   }
 
